@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_web
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered_backend
+    restart: always
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_data:/data
+
+  cloudflare:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare_tunnel
+    restart: always
+    command: tunnel --no-autoupdate run --token THAY_TOKEN_CLOUDFLARE_CUA_BAN_VAO_DAY
+
+volumes:
+  nodered_data:
+

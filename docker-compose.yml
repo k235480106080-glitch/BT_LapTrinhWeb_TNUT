@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_web
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/html1:/usr/share/nginx/html1
+      - ./nginx/html2:/usr/share/nginx/html2
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - nodered
+      - mariadb
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered_backend
+    restart: always
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_data:/data
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: mariadb_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tnut_db
+      MYSQL_USER: tnut_user
+      MYSQL_PASSWORD: tnutpassword
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_web
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: rootpassword
+
+  cloudflare:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare_tunnel
+    restart: always
+    command: tunnel --no-autoupdate run --token "eyJhIjoiNmQwYzFlYzhhYzZlNDNiYmExNGMxYTM2MGZlMGE3N2IiLCJ0IjoiZjlkNmExNjktNjI0MC00NjlmLWE4MjQtZmQ0ZWE0OTE3MWQwIiwicyI6Ik5qVmlOekV4T0RBdE16Rm1aaTAwTVRGaExXSXpZVEV0TnpBMVl6VTBPR1l3TldVMCJ9"
+
+volumes:
+  nodered_data:
+  mariadb_data:

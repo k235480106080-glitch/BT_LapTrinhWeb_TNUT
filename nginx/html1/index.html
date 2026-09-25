@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Website 1 - Hệ thống Quản lý Sinh viên API</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 30px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #1a73e8; text-align: center; }
+        p { text-align: center; color: #5f6368; }
+        .btn-container { text-align: center; margin: 20px 0; }
+        button { padding: 12px 28px; font-size: 16px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #1557b0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; color: #333; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 13px; }
+        .pass { background-color: #d4edda; color: #155724; }
+        .excellent { background-color: #cce5ff; color: #004085; }
+        #status-msg { text-align: center; font-weight: bold; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 WEBSITE 1: HỆ THỐNG API NODERED</h1>
+        <p>Trường Đại học Kỹ thuật Công nghiệp (TNUT) | SV: Trần Hoàng Xuân Vũ</p>
+        
+        <div class="btn-container">
+            <button onclick="fetchData()">Tải Danh Sách Sinh Viên (Gọi API)</button>
+        </div>
+
+        <div id="status-msg"></div>
+
+        <table id="result-table" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Mã SV</th>
+                    <th>Họ và Tên</th>
+                    <th>Điểm TB</th>
+                    <th>Xếp Loại</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function fetchData() {
+            const statusDiv = document.getElementById('status-msg');
+            statusDiv.innerHTML = "<span style='color: #666;'>Đang tải dữ liệu từ API Node-RED...</span>";
+
+            fetch('/api/dssv')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok === 1) {
+                        statusDiv.innerHTML = `<span style='color: green;'>✅ ${data.msg} (Tổng số: ${data.total} SV)</span>`;
+                        const tbody = document.getElementById('table-body');
+                        tbody.innerHTML = '';
+
+                        data.dssv.forEach(sv => {
+                            const badgeClass = sv.score >= 8.5 ? 'excellent' : 'pass';
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td><b>${sv.msv}</b></td>
+                                    <td>${sv.name}</td>
+                                    <td>${sv.score}</td>
+                                    <td><span class="badge ${badgeClass}">${sv.status}</span></td>
+                                </tr>
+                            `;
+                        });
+                        document.getElementById('result-table').style.display = 'table';
+                    }
+                })
+                .catch(err => {
+                    statusDiv.innerHTML = "<span style='color: red;'>❌ Lỗi khi kết nối tới API!</span>";
+                });
+        }
+    </script>
+</body>
+</html>
