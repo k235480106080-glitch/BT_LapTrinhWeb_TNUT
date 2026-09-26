@@ -1,0 +1,117 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9ebd77944157f8c3",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/data",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "5084b93f0ae01f7a"
+            ]
+        ]
+    },
+    {
+        "id": "5084b93f0ae01f7a",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "msg.payload = {\n    status: \"success\",\n    message: \"Xin chào từ Backend Node-RED!\",\n    time: new Date().toLocaleTimeString('vi-VN')\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 280,
+        "wires": [
+            [
+                "9326c50b1689a865"
+            ]
+        ]
+    },
+    {
+        "id": "9326c50b1689a865",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 590,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "edbf70ede3c2e11b",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/dssv",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "f6b12bc853a1a575"
+            ]
+        ]
+    },
+    {
+        "id": "f6b12bc853a1a575",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 2",
+        "func": "// Thuật toán giả lập xử lý và phân loại dữ liệu sinh viên\nconst listSV = [\n    { msv: \"K235480106080\", name: \"Trần Hoàng Xuân Vũ\", score: 9.2 },\n    { msv: \"K235480106081\", name: \"Nguyen Van A\", score: 8.7 },\n    { msv: \"K235480106082\", name: \"Le Thi B\", score: 7.5 },\n    { msv: \"K235480106083\", name: \"Tran Van C\", score: 6.8 }\n];\n\n// Thuật toán tính toán xếp loại dựa trên điểm số\nconst processedList = listSV.map(sv => {\n    let rank = \"Trung bình\";\n    if (sv.score >= 9.0) rank = \"Xuất sắc\";\n    else if (sv.score >= 8.0) rank = \"Giỏi\";\n    else if (sv.score >= 7.0) rank = \"Khá\";\n\n    return {\n        msv: sv.msv,\n        name: sv.name,\n        score: sv.score,\n        status: rank\n    };\n});\n\n// Trả về định dạng JSON đúng theo yêu cầu đề bài\nmsg.payload = {\n    ok: 1,\n    msg: \"Thành công - Lấy danh sách sinh viên TNUT\",\n    total: processedList.length,\n    dssv: processedList\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 400,
+        "wires": [
+            [
+                "b07f3241e01136e6"
+            ]
+        ]
+    },
+    {
+        "id": "b07f3241e01136e6",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 590,
+        "y": 400,
+        "wires": []
+    }
+]
