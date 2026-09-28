@@ -16,13 +16,10 @@
 ### 1. Trạng thái 5 Docker Container
 ![Docker Status](./images/01_docker_status.png)
 
-### 2. Website 1 - Gọi API Node-RED (http://site1.hoangvu057.id.vn)
-![Website 1 API](./images/02_site1_api.png)
-
-### 3. Website 2 - Trang độc lập (http://site2.hoangvu057.id.vn)
+### 2. Website 2 - Trang độc lập (http://site2.hoangvu057.id.vn)
 ![Website 2](./images/03_site2_web.png)
 
-### 4. Quản trị Database phpMyAdmin (http://pma.hoangvu057.id.vn)
+### 3. Quản trị Database phpMyAdmin (http://pma.hoangvu057.id.vn)
 ![phpMyAdmin](./images/04_phpmyadmin.png)
 
 
@@ -30,9 +27,9 @@
 
 ---
 
-# 📌 MỤC 6. LÝ THUYẾT VÀ THỰC NGHIỆM XÂY DỰNG API BẰNG NODE-RED
+### 4. LÝ THUYẾT VÀ THỰC NGHIỆM XÂY DỰNG API BẰNG NODE-RED
 
-## 6.1. KHÁI NIỆM VÀ CƠ CHẾ HOẠT ĐỘNG CỦA NODE-RED
+## 4.1. KHÁI NIỆM VÀ CƠ CHẾ HOẠT ĐỘNG CỦA NODE-RED
 
 ### A. Khái niệm chung
 * **Node-RED** là một công cụ lập trình trực quan dựa trên luồng (**Flow-based Programming - FBP**) được phát triển trên nền tảng **Node.js**.
@@ -46,7 +43,7 @@
 
 ---
 
-## 6.2. KIẾN TRÚC LUỒNG XỬ LÝ RESTFUL API (FLOW ARCHITECTURE)
+## 4.2. KIẾN TRÚC LUỒNG XỬ LÝ RESTFUL API (FLOW ARCHITECTURE)
 
 Dịch vụ Node-RED được triển khai trong môi trường **Docker Container** (Port **1880**), đứng sau mã nguồn **Nginx Reverse Proxy** để xử lý các yêu cầu từ Web Client.
 
@@ -60,10 +57,12 @@ Dịch vụ Node-RED được triển khai trong môi trường **Docker Contain
 
 ---
 
-## 6.3. MINH CHỨNG KẾT QUẢ THỰC NGHIỆM NODE-RED
+## 4.3. MINH CHỨNG KẾT QUẢ THỰC NGHIỆM NODE-RED
 
 ### 📸 Ảnh 1: Sơ đồ luồng (Flow Editor) cấu hình RESTful API trên giao diện Node-RED:
-![Node-RED Flow Editor](./images/03_nodered_flow.png)
+<img width="2878" height="1428" alt="image" src="https://github.com/user-attachments/assets/b1eac30c-f089-453d-926e-1843e7e1ef94" />
+
 
 ### 📸 Ảnh 2: Giao diện Website 1 gọi API Node-RED và hiển thị danh sách sinh viên TNUT:
-![Node-RED Web Result](./images/01_nodered_web_result.png)
+<img width="1961" height="1166" alt="image" src="https://github.com/user-attachments/assets/9c1a92c0-9a64-46e0-bbe9-bec6d778bae0" />
+
