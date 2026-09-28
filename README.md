@@ -28,14 +28,11 @@
 ---
 
 ### 4. LÝ THUYẾT VÀ THỰC NGHIỆM XÂY DỰNG API BẰNG NODE-RED
-
-## 4.1. KHÁI NIỆM VÀ CƠ CHẾ HOẠT ĐỘNG CỦA NODE-RED
-
-### A. Khái niệm chung
+#### A. Khái niệm chung
 * **Node-RED** là một công cụ lập trình trực quan dựa trên luồng (**Flow-based Programming - FBP**) được phát triển trên nền tảng **Node.js**.
 * Cho phép kết nối các thiết bị phần cứng, các điểm cuối API (**Endpoints**) và các dịch vụ trực tuyến thông qua việc kéo-thả các khối chức năng (**Nodes**) và nối chúng lại với nhau (**Wires**).
 
-### B. Cơ chế xử lý bất đồng bộ (Event-Driven)
+#### B. Cơ chế xử lý bất đồng bộ (Event-Driven)
 * Tận dụng cơ chế **Non-blocking I/O** của Node.js giúp xử lý hàng nghìn yêu cầu HTTP đồng thời với hiệu năng cao và độ trễ cực thấp.
 * Mọi dữ liệu luân chuyển giữa các Node được đóng gói trong một đối tượng JavaScript chuẩn gọi là **`msg`** (Message Object). Trong đó:
   * **`msg.payload`**: Chứa nội dung dữ liệu chính (JSON, String, Buffer, Array).
@@ -43,11 +40,11 @@
 
 ---
 
-## 4.2. KIẾN TRÚC LUỒNG XỬ LÝ RESTFUL API (FLOW ARCHITECTURE)
+## KIẾN TRÚC LUỒNG XỬ LÝ RESTFUL API (FLOW ARCHITECTURE)
 
 Dịch vụ Node-RED được triển khai trong môi trường **Docker Container** (Port **1880**), đứng sau mã nguồn **Nginx Reverse Proxy** để xử lý các yêu cầu từ Web Client.
 
-### 📊 Bảng mô tả chi tiết các Node trong luồng API:
+#### 📊 Bảng mô tả chi tiết các Node trong luồng API:
 
 | TÊN NODE | THỂ LOẠI NODE | CHỨC NĂNG VÀ QUY TRÌNH XỬ LÝ LÝ THUYẾT |
 | :--- | :--- | :--- |
@@ -57,7 +54,7 @@ Dịch vụ Node-RED được triển khai trong môi trường **Docker Contain
 
 ---
 
-## 4.3. MINH CHỨNG KẾT QUẢ THỰC NGHIỆM NODE-RED
+## MINH CHỨNG KẾT QUẢ THỰC NGHIỆM NODE-RED
 
 ### 📸 Ảnh 1: Sơ đồ luồng (Flow Editor) cấu hình RESTful API trên giao diện Node-RED:
 <img width="2878" height="1428" alt="image" src="https://github.com/user-attachments/assets/b1eac30c-f089-453d-926e-1843e7e1ef94" />
