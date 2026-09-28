@@ -28,6 +28,8 @@
 
 ---
 
+---
+
 # 📌 MỤC 6. LÝ THUYẾT VÀ THỰC NGHIỆM XÂY DỰNG API BẰNG NODE-RED
 
 ## 6.1. KHÁI NIỆM VÀ CƠ CHẾ HOẠT ĐỘNG CỦA NODE-RED
@@ -38,28 +40,30 @@
 
 ### B. Cơ chế xử lý bất đồng bộ (Event-Driven)
 * Tận dụng cơ chế **Non-blocking I/O** của Node.js giúp xử lý hàng nghìn yêu cầu HTTP đồng thời với hiệu năng cao và độ trễ cực thấp.
-* Mọi dữ liệu luân chuyển giữa các Node được đóng gói trong một đối tượng JavaScript chuẩn gọi là **** (Message Object). Trong đó:
-  * ****: Chứa nội dung dữ liệu chính (JSON, String, Buffer, Array).
-  * ****: Chứa các thông tin Header của yêu cầu HTTP (Content-Type, User-Agent,...).
+* Mọi dữ liệu luân chuyển giữa các Node được đóng gói trong một đối tượng JavaScript chuẩn gọi là **`msg`** (Message Object). Trong đó:
+  * **`msg.payload`**: Chứa nội dung dữ liệu chính (JSON, String, Buffer, Array).
+  * **`msg.headers`**: Chứa các thông tin Header của yêu cầu HTTP (Content-Type, User-Agent,...).
 
 ---
 
 ## 6.2. KIẾN TRÚC LUỒNG XỬ LÝ RESTFUL API (FLOW ARCHITECTURE)
 
-Dịch vụ Node-RED được triển khai trong môi trường **Docker Container** (Port ), đứng sau mã nguồn **Nginx Reverse Proxy** để xử lý các yêu cầu từ Web Client.
+Dịch vụ Node-RED được triển khai trong môi trường **Docker Container** (Port **1880**), đứng sau mã nguồn **Nginx Reverse Proxy** để xử lý các yêu cầu từ Web Client.
 
 ### 📊 Bảng mô tả chi tiết các Node trong luồng API:
 
 | TÊN NODE | THỂ LOẠI NODE | CHỨC NĂNG VÀ QUY TRÌNH XỬ LÝ LÝ THUYẾT |
 | :--- | :--- | :--- |
-| **** |  | Lắng nghe các HTTP Request gửi đến theo phương thức  tại tuyến đường . |
-| **** |  | Sử dụng JavaScript mã hóa mảng dữ liệu JSON chứa thông tin Sinh viên TNUT (Mã SV, Họ tên, Điểm TB, Xếp loại). |
-| **** |  | Thiết lập Header  và phản hồi dữ liệu về Client với mã . |
+| **GET /api/students** | **HTTP In** | Lắng nghe các HTTP Request gửi đến theo phương thức `GET` tại tuyến đường `/api/students`. |
+| **Process Data** | **Function** | Sử dụng JavaScript mã hóa mảng dữ liệu JSON chứa thông tin Sinh viên TNUT (Mã SV, Họ tên, Điểm TB, Xếp loại). |
+| **JSON Response** | **HTTP Response** | Thiết lập Header `Content-Type: application/json` và phản hồi dữ liệu về Client với mã `200 OK`. |
 
 ---
 
 ## 6.3. MINH CHỨNG KẾT QUẢ THỰC NGHIỆM NODE-RED
 
 ### 📸 Ảnh 1: Sơ đồ luồng (Flow Editor) cấu hình RESTful API trên giao diện Node-RED:
+![Node-RED Flow Editor](./images/03_nodered_flow.png)
 
 ### 📸 Ảnh 2: Giao diện Website 1 gọi API Node-RED và hiển thị danh sách sinh viên TNUT:
+![Node-RED Web Result](./images/01_nodered_web_result.png)
